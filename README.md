@@ -1,6 +1,7 @@
 # MoshiTest
+This is a sample trying to make `PolymorphicJsonAdapterFactory` from Moshi and `SkipBadElementsListAdapter` from this stackoverflow answer https://stackoverflow.com/a/54190660/1107755
 
-This reproduces following crash stack
+This sample reproduces following crash stack
 
 ```
  java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.moshitest/com.example.moshitest.MainActivity}: java.lang.IllegalArgumentException: No JsonAdapter for E (with no annotations)
