@@ -1,0 +1,31 @@
+[
+  {
+    "model": "m1",
+    "type": "car",
+    "tyres": [
+      {
+        "type": "mrf"
+      },
+      {
+        "type": "apollo"
+      }
+    ]
+  },
+
+  {
+    "model": "m2",
+    "type": "truck",
+    "tyres": [
+      {
+        "type": "mrf"
+      },
+      {
+        "type": "apollo"
+      },
+      {
+        "type": "apollo"
+      }
+    ]
+  }
+]
+
