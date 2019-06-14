@@ -20,12 +20,9 @@ data class Truck(override val model: String,
                  override val tyres: List<Tyre>?): Vehicle()
 
 
-sealed class Tyre {
-    abstract val type : String
-}
-
-@JsonClass(generateAdapter = true)
-data class MRFTyre(override val type : String): Tyre()
-
-@JsonClass(generateAdapter = true)
-data class ApolloTyre(override val type : String): Tyre()
+data class Tyre(val type: String)
+//@JsonClass(generateAdapter = true)
+//data class MRFTyre(override val type : String): Tyre()
+//
+//@JsonClass(generateAdapter = true)
+//data class ApolloTyre(override val type : String): Tyre()

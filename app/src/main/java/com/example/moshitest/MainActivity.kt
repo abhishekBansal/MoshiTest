@@ -16,17 +16,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val moshi = Moshi.Builder()
             // ... add your own JsonAdapters and factories ...
-            .add(SkipBadElementsListAdapter.Factory)
             .add(
                 PolymorphicJsonAdapterFactory.of(Vehicle::class.java, "type")
                     .withSubtype(Car::class.java, "car")
                     .withSubtype(Truck::class.java, "truck")
             )
-            .add(
-                PolymorphicJsonAdapterFactory.of(Tyre::class.java, "type")
-                    .withSubtype(MRFTyre::class.java, "mrf")
-                    .withSubtype(ApolloTyre::class.java, "apollo")
-            )
+            .add(SkipBadElementsListAdapter.Factory)
             .build()
 
         val string = getFileContent(R.raw.test_object)
