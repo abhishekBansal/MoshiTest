@@ -25,19 +25,21 @@ class MainActivity : AppCompatActivity() {
             .add(SkipBadElementsMapAdapter.Factory)
             .build()
 
-//        val string = getFileContent(R.raw.test_map)
+        val string = getFileContent(R.raw.test_map)
 
 
-//        string?.let {
-        val map = mutableMapOf<VehicleType2, Int>()
-        map[VehicleType2.TYPE1] = 1
-        map[VehicleType2.TYPE2] = 2
-        val adapter: JsonAdapter<Map<VehicleType2, Int>> =
-            moshi.adapter(Types.newParameterizedType(Map::class.java, VehicleType2::class.java, Integer::class.java))
+        string?.let {
+            //        val map = mutableMapOf<VehicleType2, Int>()
+//        map[VehicleType2.TYPE1] = 1
+//        map[VehicleType2.TYPE2] = 2
+//        val adapter: JsonAdapter<Map<VehicleType2, Int>> =
+//            moshi.adapter(Types.newParameterizedType(Map::class.java, VehicleType2::class.java, Integer::class.java))
 
-        Log.d("test", "success")
-        Log.i("test", adapter.toJson(map))
-//        }
+            val obje = moshi.adapter(MapTest::class.java).fromJson(it)
+            Log.d("test", "success")
+
+//            Log.i("test",)
+        }
     }
 
     private fun getFileContent(@RawRes id: Int): String? {
@@ -162,7 +164,7 @@ class MainActivity : AppCompatActivity() {
                 writer.beginObject()
                 value.forEach {
                     writer.name(elementKeyAdapter.toJsonValue(it.key).toString())
-                        .value(elementValueAdapter.toJson(it.value))
+                    elementValueAdapter.toJson(writer, it.value)
                 }
                 writer.endObject()
             }

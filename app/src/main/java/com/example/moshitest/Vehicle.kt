@@ -32,7 +32,7 @@ enum class VehicleType {
 data class Tyre(val type: String)
 
 @JsonClass(generateAdapter = true)
-data class MapTest(val vehicleTypes: VehicleType)
+data class MapTest(val vehicleTypes: Map<VehicleType2, Int>)
 
 enum class VehicleType2 {
     @Json(name ="type1")
