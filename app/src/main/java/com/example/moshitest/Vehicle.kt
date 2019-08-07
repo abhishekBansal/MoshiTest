@@ -27,10 +27,23 @@ enum class VehicleType {
     @Json(name = "truck")
     TRUCK
 }
+
 @JsonClass(generateAdapter = true)
 data class Tyre(val type: String)
-//@JsonClass(generateAdapter = true)
-//data class MRFTyre(override val type : String): Tyre()
-//
-//@JsonClass(generateAdapter = true)
-//data class ApolloTyre(override val type : String): Tyre()
+
+@JsonClass(generateAdapter = true)
+data class MapTest(val vehicleTypes: VehicleType)
+
+enum class VehicleType2 {
+    @Json(name ="type1")
+    TYPE1,
+
+    @Json(name ="type2")
+    TYPE2,
+
+    @Json(name ="type3")
+    TYPE3,
+
+    @Json(name ="type4")
+    TYPE4,
+}

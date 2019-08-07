@@ -25,15 +25,19 @@ class MainActivity : AppCompatActivity() {
             .add(SkipBadElementsMapAdapter.Factory)
             .build()
 
-        val string = getFileContent(R.raw.test_object)
-        val adapter: JsonAdapter<Map<String, Vehicle>> =
-            moshi.adapter(Types.newParameterizedType(Map::class.java, String::class.java, Vehicle::class.java))
+//        val string = getFileContent(R.raw.test_map)
 
-        string?.let {
-            val vehicles: Map<String, Vehicle>? = adapter.fromJson(string)
-            Log.d("test", "success")
-            Log.i("test", adapter.toJson(vehicles))
-        }
+
+//        string?.let {
+        val map = mutableMapOf<VehicleType2, Int>()
+        map[VehicleType2.TYPE1] = 1
+        map[VehicleType2.TYPE2] = 2
+        val adapter: JsonAdapter<Map<VehicleType2, Int>> =
+            moshi.adapter(Types.newParameterizedType(Map::class.java, VehicleType2::class.java, Integer::class.java))
+
+        Log.d("test", "success")
+        Log.i("test", adapter.toJson(map))
+//        }
     }
 
     private fun getFileContent(@RawRes id: Int): String? {
@@ -102,8 +106,7 @@ class MainActivity : AppCompatActivity() {
     private class SkipBadElementsMapAdapter(
         private val elementKeyAdapter: JsonAdapter<Any?>,
         private val elementValueAdapter: JsonAdapter<Any?>
-    ) :
-        JsonAdapter<Map<Any?, Any?>>() {
+    ) : JsonAdapter<Map<Any?, Any?>>() {
         // Factory creates a adapter and then cache it for given type
         // an adapter is for a specific type, a factory is called for every
         // type and gets to choose whether to return an adapter or ignore it (return null).
@@ -119,8 +122,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 val types = type.actualTypeArguments
-                val elementKeyAdapter = moshi.adapter<Any?>(types[0])
-                val elementValueAdapter = moshi.adapter<Any?>(types[1])
+                val elementKeyAdapter = moshi.nextAdapter<Any?>(this, types[0], annotations)
+                val elementValueAdapter = moshi.nextAdapter<Any?>(this, types[1], annotations)
 
                 return SkipBadElementsMapAdapter(elementKeyAdapter, elementValueAdapter)
             }
@@ -158,7 +161,8 @@ class MainActivity : AppCompatActivity() {
             } else {
                 writer.beginObject()
                 value.forEach {
-                    writer.name(it.key.toString()).value(elementValueAdapter.toJson(it.value))
+                    writer.name(elementKeyAdapter.toJsonValue(it.key).toString())
+                        .value(elementValueAdapter.toJson(it.value))
                 }
                 writer.endObject()
             }
